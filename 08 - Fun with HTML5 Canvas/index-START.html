@@ -6,7 +6,76 @@
 </head>
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
+
 <script>
+// selecting canvas
+const canvas = document.querySelector('#draw');
+// getting the context of the canvas
+const ctx = canvas.getContext('2d');
+// adjusting the width to the window width
+canvas.width = window.innerWidth
+// adjusting the heigth to the window heigth
+canvas.height = window.innerHeight
+// stroke = color
+ctx.strokeStyle = '#BADA55';
+// when a line ends or meets with another it should be round
+ctx.lineJoin = 'round';
+ctx.lineCap = 'round';
+ctx.lineWidth = 8;
+
+let isDrawing = false;
+let lastX = 0;
+let lastY = 0;
+let hue = 0;
+let direction = true;
+
+function draw(e) {
+  if (!isDrawing) return; // else, stop the function
+  console.log(e);
+
+  // definying hue to start in red
+  ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`
+
+  // starts the path
+  ctx.beginPath();
+  ctx.moveTo(lastX, lastY);
+  ctx.lineTo(e.offsetX, e.offsetY);
+  ctx.stroke();
+
+  // sets the
+  [lastX, lastY] = [e.offsetX, e.offsetY];
+  // this increments the hue and creates the rainbow
+  hue++;
+  // resetting the hue
+  if (hue >= 360) {
+    hue = 0;
+  }
+
+  // changing the width when it gets to 100
+  if(ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+    direction = !direction;
+  }
+
+  if(direction === true) {
+    ctx.lineWidth++;
+  } else {
+    ctx.lineWidth--;
+  }
+
+}
+
+canvas.addEventListener('mousedown', (e) => {
+  isDrawing = true;
+  [lastX, lastY] = [e.offsetX, e.offsetY];
+})
+
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mousedown', () => isDrawing = true);
+canvas.addEventListener('mouseup', () => isDrawing = false);
+canvas.addEventListener('mouseout', () => isDrawing = false);
+
+
+
 </script>
 
 <style>
