@@ -96,6 +96,53 @@
   </div>
 
 <script>
+
+const tasks = document.querySelectorAll('.inbox input[type="checkbox"]')
+
+// console.log(tasks);
+
+let lastChecked;
+
+function handleCheck(e) {
+  let inBetween = false;
+  //check if they had the shift key down
+  // AND check if the task has been marked as done (checking it)
+  if (e.shiftKey && this.checked) {
+
+    // loop over every checkbox
+    // then do what we want
+    tasks.forEach(task => {
+      console.log(task);
+      if (task === this || task === lastChecked) {
+        inBetween = !inBetween;
+        // console.log(this)
+        // console.log(lastChecked)
+        console.warn('it starts here')
+      }
+
+      if (inBetween) {
+        task.checked = true;
+      }
+    });
+
+  }
+
+  lastChecked = this
+  // console.log(lastChecked)
+};
+
+tasks.forEach(task => task.addEventListener('click', handleCheck))
+
+
+
+
+
+
+
+
+
+
+
 </script>
 </body>
 </html>
