@@ -43,7 +43,7 @@
   </div>
 
   <script>
-    function debounce(func, wait = 20, immediate = true) {
+    function debounce(func, wait = 25, immediate = true) {
       var timeout;
       return function() {
         var context = this, args = arguments;
@@ -57,6 +57,49 @@
         if (callNow) func.apply(context, args);
       };
     }
+
+    // select all images inside a variable
+    const sliderImages = document.querySelectorAll('.slide-in');
+
+    // function that checks if person is sliding down
+    function checkSlide(e) {
+      // console.count(e)
+
+      // loop over every imagen and for each of them, check if it is enough on the page to be shown
+      // window.scrollY + window height - img height / 2 => image will slide in when you scroll on the middle of the image
+      sliderImages.forEach(sliderImage => {
+
+        // halfway through the image
+        const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;
+
+        // finding the bottom of the image = offsettop + img height
+        // offsettop is how far the top of the image is from the top of the page
+        const imageBottom = sliderImage.offsetTop + sliderImage.height;
+
+        // variable to see if its half shown
+        const isHalfShown = slideInAt > sliderImage.offsetTop;
+
+        // is not scrolled past ? variable
+        const isNotScrolledPast = window.scrollY < imageBottom;
+
+        // if active and img passed -> add active class, else not
+        if (isHalfShown && isNotScrolledPast) {
+          sliderImage.classList.add('active');
+        } else {
+          sliderImage.classList.remove('active');
+        }
+      });
+    }
+
+    // (event is scroll)
+    // console.count the event on the function BUT inside debounce
+    window.addEventListener('scroll', debounce(checkSlide))
+
+
+
+    //
+
+
 
   </script>
 
