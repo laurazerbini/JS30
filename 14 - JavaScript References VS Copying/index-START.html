@@ -25,30 +25,79 @@
     // Why? It's because that is an array reference, not an array copy. They both point to the same array!
 
     // So, how do we fix this? We take a copy instead!
+    console.log('this is players ',`${players}`)
 
     // one way
+    const players2 = players.slice();
+    players2[2] = 'Laura';
+    console.log('this is players2 ',`${players2}`)
 
     // or create a new array and concat the old one in
+    players3 = [].concat(players);
+    players3[2] = 'Lucas';
+    console.log('this is players3 ',`${players3}`)
 
     // or use the new ES6 Spread
+    const players4 = [...players]
+    players4[2] = 'DING DONG';
+    console.log('this is players4 ',`${players4}`)
+
+    const players5 = Array.from(players);
+    players5[2] = 'DONG DING'
+    console.log('this is players5 ',`${players5}`)
+
 
     // now when we update it, the original one isn't changed
+    console.log('this is players ',`${players}`)
 
     // The same thing goes for objects, let's say we have a person object
 
     // with Objects
     const person = {
-      name: 'Wes Bos',
-      age: 80
+      name: 'Laura',
+      surname: 'Zerbini',
+      age: 29
     };
 
     // and think we make a copy:
+    // const brother = person;
+    // brother.age = 30
+
+    // console.log(person.age)
 
     // how do we take a copy instead?
+    const brother = Object.assign({}, person, {name:'Lucas', age:30, city:'Campinas'});
+    console.log(brother)
 
     // We will hopefully soon see the object ...spread
+    const person2 = {...person};
+    console.log(person2)
 
-    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+    // Things to note - this is only 1 level deep - both for Arrays and Objects.
+    // lodash has a cloneDeep method, but you should think twice before using it.
+    const laura = {
+      name:'laura',
+      surname:'zerbini',
+      age:'29',
+      social: {
+        twitter: '@laurazerbini',
+        ig: '@zerbinilaura'
+      }
+    };
+
+    console.clear();
+    // console.log(laura);
+
+    // const laura2 = Object.assign({}, laura)
+
+    // laura2.social.twitter = '@testing';
+    // console.log(laura2);
+
+    const laura3 = JSON.parse(JSON.stringify(laura));
+    laura3.social.twitter = '@iamtesting';
+    console.log(laura3);
+    console.log(laura);
+
 
   </script>
 
