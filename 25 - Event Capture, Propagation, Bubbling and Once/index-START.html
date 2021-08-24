@@ -28,20 +28,40 @@
   }
 
   .one {
-    background: thistle;
+    background: green;
   }
 
   .two {
-    background: mistyrose;
+    background: yellow;
   }
 
   .three {
-    background: coral;
+    background: blue;
   }
 </style>
 
 <button></button>
 <script>
+
+  const divs = document.querySelectorAll('div');
+  const button = document.querySelector('button');
+
+  function logText(e) {
+    console.log(this.classList.value)
+    e.stopPropagation();
+    // console.log(this)
+  }
+
+   divs.forEach(div => div.addEventListener('click', logText, {
+    capture: false,
+    once: true
+  }));
+
+   button.addEventListener('click', () => {
+    console.log('Click!!!');
+  }, {
+    once: false
+  });
 
 </script>
 </body>
